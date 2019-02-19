@@ -12,7 +12,10 @@ class Counter extends Component {
     // }
 
     state = { 
-        count : 0,
+        // Changing variable name count -> value in order to maintain consistency.
+        // Basically, the attributes defined in the parent component can be accessed in the child component using
+        // this.props object
+        value : this.props.value,
         tags : ["tag1", "tag2", "tag3"]
     };
 
@@ -28,11 +31,11 @@ class Counter extends Component {
 
         // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
         // While calling it, we pass a new object which replaces the state {}
-        this.setState( {count : this.state.count + 1 } )
+        this.setState( {value : this.state.value + 1 } )
         console.log(product);
     };
 
-    render() { 
+    render() {
         return (
             <React.Fragment>
                 <span style = { this.styles } className = { this.getBadgeClasses() }> { this.formatCount() }</span>
@@ -44,13 +47,13 @@ class Counter extends Component {
 
     getBadgeClasses() {
         let classes = "badge m-2 badge-";
-        classes += (this.state.count === 0) ? "warning" : "primary";
+        classes += (this.state.value === 0) ? "warning" : "primary";
         return classes;
     }
 
     formatCount(){
-        const { count } = this.state;
-        return count === 0 ? 'Zero' : count;
+        const { value } = this.state;
+        return value === 0 ? 'Zero' : value;
     }
 }
  
