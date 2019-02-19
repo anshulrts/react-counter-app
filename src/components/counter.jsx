@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 
 class Counter extends Component {
 
+    // When we call onClick event from render(), we cannot directly refer to 'this' object of Counter class from inside of
+    // handleIncrement(). There are 2 ways of handling it :-
+    // 1. Use bind() in the constructor
+    // 2. Use arrow function. It doesn't lose the scope of this. This way is preferred.
+    // constructor() {
+    //     super();
+    //     this.handleIncrement = this.handleIncrement.bind(this);
+    // }
+
     state = { 
         count : 0,
         tags : ["tag1", "tag2", "tag3"]
@@ -13,7 +22,13 @@ class Counter extends Component {
     };
 
     handleIncrement = () => {
-        console.log("handleIncrement", this);
+        // We do not directly increase the count object of Counter class.
+        // Doing so would not increase the count on UI as React VirtualDOM is not informed about the increment.
+        // this.state.count++;
+
+        // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
+        // While calling it, we pass a new object which replaces the state {}
+        this.setState( {count : this.state.count + 1 } )
     }
 
     render() { 
