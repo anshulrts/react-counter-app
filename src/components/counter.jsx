@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 
 class Counter extends Component {
 
-    constructor() {
-        super();
-        this.handleIncrement = this.handleIncrement.bind(this);
-    }
-
     state = { 
         count : 0,
         tags : ["tag1", "tag2", "tag3"]
@@ -17,7 +12,7 @@ class Counter extends Component {
         fontWeight : 'bold'
     };
 
-    handleIncrement() {
+    handleIncrement = () => {
         console.log("handleIncrement", this);
     }
 
