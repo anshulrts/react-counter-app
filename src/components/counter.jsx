@@ -21,7 +21,7 @@ class Counter extends Component {
         fontWeight : 'bold'
     };
 
-    handleIncrement = () => {
+    handleIncrement = product => {
         // We do not directly increase the count object of Counter class.
         // Doing so would not increase the count on UI as React VirtualDOM is not informed about the increment.
         // this.state.count++;
@@ -29,13 +29,14 @@ class Counter extends Component {
         // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
         // While calling it, we pass a new object which replaces the state {}
         this.setState( {count : this.state.count + 1 } )
-    }
+        console.log(product);
+    };
 
     render() { 
-        return ( 
+        return (
             <React.Fragment>
                 <span style = { this.styles } className = { this.getBadgeClasses() }> { this.formatCount() }</span>
-                <button onClick = {this.handleIncrement} className="btn btn-secondary btn-sm">Increment</button>           
+                <button onClick = { () => this.handleIncrement({id : 1}) } className="btn btn-secondary btn-sm">Increment</button>           
             </React.Fragment>
          );
     }
