@@ -14,7 +14,13 @@ class Counters extends Component {
         return (
             <div>
                 { this.state.counters.map(
-                    counter => <Counter key={ counter.id } value = { counter.value } />
+                    // All of the attributes of <Counter ... /> will be available in the Child component using this.props
+                    // But we can also associate child property to props in between <Counter>...</Counter>
+                    // Here, we are setting it to
+                    counter =>
+                    <Counter key={ counter.id } value = { counter.value } id = { counter.id }>
+                        <h2>Title</h2>
+                    </Counter>
                     )
                 }
             </div>

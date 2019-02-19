@@ -32,12 +32,13 @@ class Counter extends Component {
         // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
         // While calling it, we pass a new object which replaces the state {}
         this.setState( {value : this.state.value + 1 } )
-        console.log(product);
     };
 
     render() {
+        console.log(this.props);
         return (
             <React.Fragment>
+                <h2>Counter # {this.props.id} </h2>
                 <span style = { this.styles } className = { this.getBadgeClasses() }> { this.formatCount() }</span>
                 <button onClick = { () => this.handleIncrement({id : 1}) } className="btn btn-secondary btn-sm">Increment</button>
                 <br />           
