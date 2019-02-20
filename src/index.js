@@ -12,3 +12,10 @@ ReactDOM.render(<Counters />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+
+// This ensures that during development, whenever there is a code change, only the part of DOM is updated
+// and not the complete page refresh happens.
+if(module.hot) {
+    module.hot.accept();
+}
