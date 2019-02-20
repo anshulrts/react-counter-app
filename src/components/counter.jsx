@@ -11,27 +11,21 @@ class Counter extends Component {
     //     this.handleIncrement = this.handleIncrement.bind(this);
     // }
 
-    state = { 
-        // Changing variable name count -> value in order to maintain consistency.
-        // Basically, the attributes defined in the parent component can be accessed in the child component using
-        // this.props object
-        value : this.props.counter.value,
-        tags : ["tag1", "tag2", "tag3"]
-    };
+
+    // We have to make the Counter component a controlled component because the value of counter must be maintained
+    // at one place only. Figured this out while implementing reset functionality. Therefore, all of the event of count
+    // will go to parent component and they will be called just like onDelete
+    // state = { 
+    //     // Changing variable name count -> value in order to maintain consistency.
+    //     // Basically, the attributes defined in the parent component can be accessed in the child component using
+    //     // this.props object
+    //     value : this.props.counter.value,
+    //     tags : ["tag1", "tag2", "tag3"]
+    // };
 
     styles = {
         fontSize : 12,
         fontWeight : 'bold'
-    };
-
-    handleIncrement = product => {
-        // We do not directly increase the count object of Counter class.
-        // Doing so would not increase the count on UI as React VirtualDOM is not informed about the increment.
-        // this.state.count++;
-
-        // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
-        // While calling it, we pass a new object which replaces the state {}
-        this.setState( {value : this.state.value + 1 } )
     };
 
     render() {
@@ -39,8 +33,13 @@ class Counter extends Component {
             <React.Fragment>
                 {/* Accessing props in Child Component */}
                 {/* <h2>Counter # {this.props.counter.id} </h2> */}
-                <span style = { this.styles } className = { this.getBadgeClasses() }> { this.formatCount() }</span>
-                <button onClick = { () => this.handleIncrement({id : 1}) } className="btn btn-secondary btn-sm">Increment</button>
+                <span
+                style = { this.styles }
+                className = { this.getBadgeClasses() }
+                >
+                    { this.formatCount() }
+                </span>
+                <button onClick = { () => this.props.onIncrement(this.props.counter) } className="btn btn-secondary btn-sm">Increment</button>
                 {/* Passing the id to be deleted to parent component, as this entry needs to be deleted from 
                 Counters.state.list */}
                 <button onClick = { () => this.props.onDelete(this.props.counter.id) } className="btn btn-danger btn-sm m-2">Delete</button>
@@ -51,14 +50,14 @@ class Counter extends Component {
 
     getBadgeClasses() {
         let classes = "badge m-2 badge-";
-        classes += (this.state.value === 0) ? "warning" : "primary";
+        classes += (this.props.counter.value === 0) ? "warning" : "primary";
         return classes;
-    }
+    };
 
-    formatCount(){
-        const { value } = this.state;
+    formatCount() {
+        const value = this.props.counter.value;
         return value === 0 ? 'Zero' : value;
-    }
+    };
 }
  
 export default Counter;

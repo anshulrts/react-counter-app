@@ -17,6 +17,7 @@ class Counters extends Component {
             c.value = 0;
             return c;
         });
+        this.setState({ counters });
     }
 
     // In order to implement delete button functionality, we have to delete the counter from the state of Counters component
@@ -27,6 +28,20 @@ class Counters extends Component {
         const counters = this.state.counters.filter(row => row.id != counterId);
         this.setState({ counters });
     }
+
+    handleIncrement = counter => {
+        // We do not directly increase the count object of Counter class.
+        // Doing so would not increase the count on UI as React VirtualDOM is not informed about the increment.
+        // this.state.count++;
+
+        // We have to call setState() of React in order to inform VirtualDOM about the increase in counter
+        // While calling it, we pass a new object which replaces the state {} 
+        const counters = [...this.state.counters];
+        const index = counters.indexOf(counter);
+        counters[index] = { ...counter };
+        counters[index].value++;
+        this.setState( { counters } )
+    };
     
     render() { 
         return (
@@ -36,7 +51,14 @@ class Counters extends Component {
                     // All of the attributes of <Counter ... /> will be available in the Child component using this.props
                     // But we can also associate child property to props in between <Counter>...</Counter>
                     counter =>
-                    <Counter key={ counter.id } onDelete = { this.handleDelete } counter = { counter } />
+                    <Counter
+                    key={ counter.id }
+                    onIncrement = { this.handleIncrement }
+                    onDelete = { this.handleDelete }
+                    counter = { counter }
+                    getBadgeClasses = { this.getBadgeClasses }
+                    formatCount = { this.formatCount }
+                    />
                     )
                 }
             </div>
